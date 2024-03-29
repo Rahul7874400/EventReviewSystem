@@ -62,29 +62,29 @@ userSchema.methods.isPasswordCorrect = async function (password){
     return bcrypt.compare(password,this.password)
 }
 
-userSchema.methods.generateAccessToken = async function (){
+userSchema.methods.generateAccessToken = function(){
     return jwt.sign(
         {
             _id: this._id,
             email: this.email,
-            userName: this.userName,
+            username: this.username,
             fullName: this.fullName
         },
         process.env.ACCESS_TOKEN_SCERET,
         {
-            expiresIn: process.env.ACCESS_TOKEN_EXPIRE
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
         }
     )
 }
-
-userSchema.methods.generaterefreshToken = async function (){
+userSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {
-            _id : this._id
+            _id: this._id,
+            
         },
         process.env.REFRESH_TOKEN_SECRET,
         {
-            expiresIn : process.env.REFRESH_TOKEN_EXPIRE
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
         }
     )
 }

@@ -29,9 +29,11 @@ app.use(cookieParser())
 // import Router
 
 import userRouter from "./routes/user.route.js"
+import eventRouter from "./routes/event.route.js"
 
 
 app.use("/api/v1/users" , userRouter)
+app.use("/api/v1/event" , eventRouter)
 
 export { app }
 

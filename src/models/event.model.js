@@ -6,6 +6,10 @@ const eventSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "User"
     },
+    eventName : {
+        type : String,
+        required : true
+    },
     flage : {
         type : Boolean,
         default : false

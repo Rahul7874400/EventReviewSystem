@@ -13,17 +13,23 @@ const generateAccessTokenAndRefreshToken = async (userId) =>{
             throw new ApiError(404 , "Invalid User")
         }
 
+        //console.log("user : ",user)
+
         const accessToken = user.generateAccessToken()
-        const refreshToken = user.generaterefreshToken()
+        const refreshToken = user.generateRefreshToken()
+
+        
 
         user.refreshToken = refreshToken
         await user.save({
             validateBeforeSave : false
         })
 
+        
+
         return {accessToken , refreshToken}
     } catch (error) {
-        throw new ApiError(404 , "something went worng while genetrating token")
+        throw new ApiError(404 , error.message||"something went worng while genetrating token")
     }
 }
 
@@ -110,7 +116,9 @@ const loginUser = asyncHandler(async (req,res)=>{
         throw new ApiError(404 , "user does not exist")
     }
 
-    const {refreshToken , accessToken} = generateAccessTokenAndRefreshToken(user._id)
+    const {accessToken , refreshToken} = await generateAccessTokenAndRefreshToken(user._id)
+    // console.log("Access Token :",accessToken)
+    // console.log("refreshToken : ",refreshToken )
 
 
     const loggedinUser = await User.findById(user._id).select("-password")
@@ -211,7 +219,7 @@ const forgotPassword = asyncHandler( async(req,res)=>{
         throw new ApiError(404 , "Email or Username is required")
     }
 
-    const user = User.findOne({
+    const user = await User.findOne({
         $or : [{email} , {userName}]
     })
 
@@ -220,12 +228,11 @@ const forgotPassword = asyncHandler( async(req,res)=>{
     }
 
     email = user.email
-
     // send email
 
     sendEmail({email , emailType : RESET , userId : user._id})
 
-    const response = await user.select("-password")
+    const response = await User.findById(user._id).select("-password")
 
     return res
     .status(202)
