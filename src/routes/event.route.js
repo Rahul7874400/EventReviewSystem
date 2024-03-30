@@ -10,10 +10,10 @@ const router = Router()
 
 router.use(verifyJwt)
 
-router.route("/organise").post(organiseEvent)
+router.route("/organise/:userId").post(organiseEvent)
 router.route("/delete/:eventId").delete(deleteEvent)
-router.route("/getevent/:userId").get(getEventByUserId)
-router.route("/ckeck").patch(checkReportedEvent)
+router.route("/get/:userId").get(getEventByUserId)
+router.route("/check").patch(checkReportedEvent)
 
 
 
