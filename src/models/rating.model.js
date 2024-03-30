@@ -21,10 +21,13 @@ const ratingSchema = new mongoose.Schema({
         max : 10,
         required : true
     },
-    BreakfastExperince : {
+    breakfastExperince : {
         type : Number,
         min : 1,
         max : 10
+    },
+    averageRating : {
+        type : Number
     }
 },{timestamps : true})
 
