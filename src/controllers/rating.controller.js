@@ -61,12 +61,12 @@ const addRating = asyncHandler( async(req,res)=>{
 } )
 
 const deleteRating = asyncHandler( async(req,res)=>{
-    const {userId , eventId} = req.params
+    const {eventId} = req.params
    
 
     const rating = await Rating.findOneAndDelete({
         event : eventId,
-        ratedBy : userId
+        ratedBy : req?.user._id
     })
 
     if(!rating){
@@ -85,7 +85,7 @@ const deleteRating = asyncHandler( async(req,res)=>{
 } )
 
 const updateRating = asyncHandler( async(req,res)=>{
-    const {userId , eventId} = req.params
+    const {eventId} = req.params
     const {registrationExperince , eventExperince , breakfastExperince} = req.body
 
     if(isNaN(registrationExperince) || isNaN(eventExperince) || isNaN(breakfastExperince)){
@@ -97,7 +97,7 @@ const updateRating = asyncHandler( async(req,res)=>{
     const rating = await Rating.findOneAndUpdate(
         {
             event : eventId,
-            ratedBy : userId
+            ratedBy : req?.user._id
         },
         {
             registrationExperince : registrationExperince,

@@ -7,16 +7,15 @@ import { Report } from "../models/report.model.js"
 import mongoose from "mongoose"
 
 const organiseEvent = asyncHandler( async(req,res)=>{
-    const{userId} = req.params
     const {eventName} = req.body
 
-    const user = await User.findById(userId)
-    if(!user){
-        throw new ApiError(404 , "user does not exist")
-    }
+    // const user = await User.findById(userId)
+    // if(!user){
+    //     throw new ApiError(404 , "user does not exist")
+    // }
 
     const event = await  Event.create({
-        organisedBy : userId,
+        organisedBy : req?.user._id,
         eventName : eventName
     })
 
@@ -56,20 +55,20 @@ const deleteEvent = asyncHandler( async(req,res)=>{
 } )
 
 const getEventByUserId = asyncHandler( async(req,res)=>{
-    const {userId} = req.params
+   // const {userId} = req.params
 
-    const user = await User.findById(userId)
+    // const user = await User.findById(userId)
 
-    if(!user){
-        throw new ApiError(404 , "User does not exist")
-    }
+    // if(!user){
+    //     throw new ApiError(404 , "User does not exist")
+    // }
 
     //console.log("user" , user)
 
     const event = await Event.aggregate([
         {
             $match : {
-                organisedBy : user._id
+                organisedBy : new mongoose.Types.ObjectId(req?.user._id)
             }
         },
         {

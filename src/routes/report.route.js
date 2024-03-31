@@ -8,8 +8,8 @@ import { getReportedEvent,
 const router = Router()
 router.use(verifyJwt)
 
-router.route("/toggleEvent/:eventId/:userId").post(toggleEventReport)
-router.route("/getevent/:userId").get(getReportedEvent)
+router.route("/toggleEvent/:eventId").post(toggleEventReport)
+router.route("/getevent/").get(getReportedEvent)
 
 
 

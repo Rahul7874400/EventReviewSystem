@@ -11,8 +11,8 @@ const router = Router()
 router.use(verifyJwt)
 
 router.route("/add/:eventId").post(addRating)
-router.route("/delete/:userId/:eventId").delete(deleteRating)
-router.route("/update/:userId/:eventId").patch(updateRating)
+router.route("/delete/:eventId").delete(deleteRating)
+router.route("/update/:eventId").patch(updateRating)
 router.route("/getrating/:eventId").get(getEventRating)
 
 

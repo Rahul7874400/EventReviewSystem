@@ -8,7 +8,7 @@ import { Event } from "../models/event.model.js"
 
 // report the event if event is not reported of unreport if event is reported
 const toggleEventReport = asyncHandler( async(req,res)=>{
-    const {eventId , userId} = req.params
+    const {eventId} = req.params
 
     const alreadyReportedOrNot = await Report.findOne({
         event : eventId
@@ -17,7 +17,7 @@ const toggleEventReport = asyncHandler( async(req,res)=>{
     if(!alreadyReportedOrNot){
         const createReport = await Report.create({
             event : eventId,
-            reportBy : userId
+            reportBy : req?.user._id
         })
 
         if(!createReport){
@@ -56,18 +56,18 @@ const toggleEventReport = asyncHandler( async(req,res)=>{
 } )
 
 const getReportedEvent = asyncHandler( async(req,res)=>{
-    const {userId} = req.params
+    // const {userId} = req.params
 
-    const user = await User.findById(userId)
+    // const user = await User.findById(userId)
 
-    if(!user){
-        throw new ApiError(404 , "User does not exist")
-    }
+    // if(!user){
+    //     throw new ApiError(404 , "User does not exist")
+    // }
 
     const event = await Event.aggregate([
         {
             $match : {
-                organisedBy : user._id
+                organisedBy : new mongoose.Types.ObjectId(req?.user._id)
             }
         },
         {
