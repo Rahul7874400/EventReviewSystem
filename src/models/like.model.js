@@ -5,6 +5,10 @@ const likeSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Event"
     },
+    rating : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Rating"
+    },
     likedBy : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User"

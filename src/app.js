@@ -30,10 +30,16 @@ app.use(cookieParser())
 
 import userRouter from "./routes/user.route.js"
 import eventRouter from "./routes/event.route.js"
+import likeRouter from "./routes/like.route.js"
+import ratingRouter from "./routes/rating.route.js"
+import reportRouter from "./routes/report.route.js"
 
 
 app.use("/api/v1/users" , userRouter)
 app.use("/api/v1/event" , eventRouter)
+app.use("/api/v1/like" , likeRouter)
+app.use("/api/v1/rating" , ratingRouter)
+app.use("/api/v1/report" , reportRouter)
 
 export { app }
 

@@ -7,11 +7,11 @@ import mongoose from "mongoose"
 
 
 const addRating = asyncHandler( async(req,res)=>{
-    const {userId , eventId} = req.params
+    const {eventId} = req.params
 
     const aleadyRating  = await Rating.findOne({
         event : eventId,
-        ratedBy : userId
+        ratedBy : req?.user._id
     })
 
     if(aleadyRating){
@@ -33,7 +33,7 @@ const addRating = asyncHandler( async(req,res)=>{
     const averave = parseFloat((parseInt(registrationExperince) + parseInt(eventExperince) + parseInt(breakfastExperince))/3)
     const createRating = await Rating.create({
         event : eventId,
-        ratedBy : userId,
+        ratedBy : req?.user._id,
         registrationExperince : registrationExperince,
         eventExperince : eventExperince,
         breakfastExperince : breakfastExperince,
